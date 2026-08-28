@@ -1,0 +1,38 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model document {
+  id              BigInt            @id @default(autoincrement())
+  user_id         BigInt
+  file_name       String
+  created_at      DateTime?         @default(now()) @db.Timestamptz(6)
+  users           users             @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  document_chunks document_chunks[]
+}
+
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model document_chunks {
+  id          BigInt                @id @default(autoincrement())
+  document_id BigInt
+  content     String
+  embedding   Unsupported("vector")
+  created_at  DateTime?             @default(now()) @db.Timestamptz(6)
+  document    document              @relation(fields: [document_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+}
+
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model users {
+  id         BigInt     @id @default(autoincrement())
+  email      String     @unique
+  password   String
+  created_at DateTime?  @default(now()) @db.Timestamptz(6)
+  user_name  String?
+  document   document[]
+}
