@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import './Login.css'
+import axios from 'axios';
 
 function Login() {
   const [mode, setMode] = useState('login')   // 'login' | 'register'
@@ -19,16 +20,32 @@ function Login() {
     setForm((prev) => ({ ...prev, [name]: type === 'checkbox' ? checked : value }))
   }
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
 
     if (mode === 'register') {
+      const registerResponse = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/auth/register`, {
+        username: form.name,
+        password: form.password,
+        email: form.email
+      })
+
 
     }
     else{
+      const loginResponse = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/auth/login`, {
+        email: form.email,
+        password: form.password
+      })
 
+      if (loginResponse.data.status === 200) {
+        sessionStorage.setItem('is_logged_in', loginResponse.data.data.email);
+        window.location.reload();
+      }
+      else{
+        window.alert(loginResponse.data.message);
+      }
     }
-    console.log(mode, form)
   }
 
   return (

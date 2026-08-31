@@ -39,6 +39,10 @@
   transform: rotate(1.5deg);
 }
 
+.nb-logout {
+  margin-left: auto;
+}
+
 /* ---------- Card ---------- */
 
 .nb-card {

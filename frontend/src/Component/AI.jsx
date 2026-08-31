@@ -138,11 +138,17 @@ function AI() {
     }
   }
 
+  const logout = () => {
+    sessionStorage.removeItem('is_logged_in');
+    window.location.reload();
+  }
+
   return (
     <div className="nb-page">
       <header className="nb-header">
         <h1 className="nb-title">RAG</h1>
         <span className="nb-tag">Ask your PDF</span>
+        <button className="nb-btn nb-logout" onClick={logout} type="button">Logout</button>
       </header>
 
       <div className="nb-card">

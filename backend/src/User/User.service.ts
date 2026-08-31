@@ -21,9 +21,9 @@ export class UserService {
     });
 
     if (!user || user.password !== password) {
-      return { message: 'Invalid username or password' };
+      return { status: 401, message: 'Invalid email or password' };
     }
 
-    return { message: 'User logged in successfully', data : {email: user.email, user_name: user.user_name, id: Number(user.id )}};
+    return { status: 200, message: 'User logged in successfully', data : {email: user.email, user_name: user.user_name, id: Number(user.id )}};
   }
 }
