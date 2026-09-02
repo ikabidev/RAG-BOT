@@ -40,6 +40,7 @@ function Login() {
 
       if (loginResponse.data.status === 200) {
         sessionStorage.setItem('is_logged_in', loginResponse.data.data.email);
+        sessionStorage.setItem('user_id', loginResponse.data.data.id);
         window.location.reload();
       }
       else{

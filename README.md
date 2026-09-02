@@ -1,6 +1,6 @@
 # RAG-BOT v1
 
-A learning project to understand and build a **Retrieval-Augmented Generation (RAG)** application from scratch using **React** and **Gemini**.
+A learning project to understand and build a **Retrieval-Augmented Generation (RAG)** application from scratch using **React**, **NestJS**, and **Gemini**.
 
 This README serves as a progress tracker, documenting the concepts learned and features implemented throughout the project.
  
@@ -16,3 +16,4 @@ This README serves as a progress tracker, documenting the concepts learned and f
 - ✅ **Aug 21** — Completed the retrieval loop: embedded the user's prompt with the `RETRIEVAL_QUERY` task type, ranked chunks by **cosine similarity**, and passed the top 3 as context to `gemini-2.5-flash` for a grounded answer.
 - ✅ **Aug 28** — Adding a NestJS backend and understanding NestJS architecture, Create DB in supabase, Added login
 - ✅ **Aug 31** — Connected the React login/register form to the NestJS `/auth` endpoints with **axios**, and added DTOs for the request bodies.
+- ✅ **Sep 2** — Ported the RAG pipeline into the **NestJS** backend: `POST /rag/upload-pdf` accepts the file as multipart upload and runs extraction → chunking → embedding server-side, with each stage refactored into its own helper under `Common/Utils`.
