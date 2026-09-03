@@ -182,10 +182,46 @@
 
 /* ---------- Output ---------- */
 
+.disabled-btn{
+  background: rgba(128, 128, 128, 0.517);
+  cursor: not-allowed;
+}
+
 .nb-output {
   background: var(--nb-white);
   border: var(--nb-border);
   box-shadow: var(--nb-shadow);
+  margin-bottom: 28px;
+}
+
+.nb-documents-container{
+  padding: 12px 20px;
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.nb-document {
+  padding: 10px 14px;
+  font-size: 14px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--nb-ink);
+  background: var(--nb-yellow);
+  border: var(--nb-border);
+  box-shadow: var(--nb-shadow-sm);
+  cursor: pointer;
+  width: 49%;
+  position: relative;
+}
+
+.nb-document-checkbox{
+  position: absolute;
+  width: 100%;
+  top: 0;
+  left: 0;
+  height: 100%;
 }
 
 .nb-output-head {

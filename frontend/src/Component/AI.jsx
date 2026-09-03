@@ -1,15 +1,32 @@
-import { useState, useRef } from 'react'
+import { useState, useRef, useEffect } from 'react'
+import axios from 'axios';
 import Markdown from 'react-markdown';
 
 function AI() {
   const [prompt, setPrompt] = useState('')
   const fileRef = useRef(null)
   const formData = new FormData();
+  const [documents, setDocuments] = useState([]);
+  const [selectedDocument, setSelectedDocument] = useState(null);
 
   const logout = () => {
     sessionStorage.removeItem('is_logged_in');
     window.location.reload();
   }
+
+  const getDocuments = async () => {
+    const user_id = sessionStorage.getItem('user_id');
+    const response = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/rag/get-document`, {
+      params: {
+        user_id: user_id
+      }
+    });
+    setDocuments(response.data.data);
+  }
+
+  useEffect(() => {
+    getDocuments();
+  }, []);
 
   const UploadFunction = async () => {
     formData.append('file', fileRef.current.files[0]);
@@ -20,6 +37,7 @@ function AI() {
     });
 
     window.alert("File Uploaded Successfully");
+    getDocuments();
   }
 
   return (
@@ -43,7 +61,7 @@ function AI() {
                 value={prompt}
                 onChange={(e) => {setPrompt(e.target.value)}}
               />
-              <button className="nb-btn nb-btn-primary" type="button">Submit</button>
+              <button className={`nb-btn nb-btn-primary ${selectedDocument ? '' : 'disabled-btn'}`} type="button">Submit</button>
             </div>
           </div>
 
@@ -58,13 +76,25 @@ function AI() {
         </form>
       </div>
 
-      <div>
-        
-      </div>
+      <section className="nb-output">
+        <div className="nb-output-head">Documents</div>
+        <div className="nb-documents-container">
+          {documents.length === 0 ? "Upload a Document to get started." : 
+            documents.map((document) => (
+              <div key={document.id} className="nb-document">
+                <input type="radio" name="document" onChange={() => setSelectedDocument(document)} className="nb-document-checkbox" />
+                <div className="nb-document-name">
+                  {document.name.length > 20 ? document.name.substring(0, 31) + "..." : document.name }
+                </div>
+              </div>
+            ))
+          }
+        </div>
+      </section>
 
       <section className="nb-output">
         <div className="nb-output-head">Output</div>
-        <div className="nb-empty">{"Upload a Document to get relevant answers."}</div>
+        <div className="nb-empty">{"Upload/Select a Document to get relevant answers."}</div>
       </section>
     </div>
   )

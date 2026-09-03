@@ -17,3 +17,4 @@ This README serves as a progress tracker, documenting the concepts learned and f
 - ✅ **Aug 28** — Adding a NestJS backend and understanding NestJS architecture, Create DB in supabase, Added login
 - ✅ **Aug 31** — Connected the React login/register form to the NestJS `/auth` endpoints with **axios**, and added DTOs for the request bodies.
 - ✅ **Sep 2** — Ported the RAG pipeline into the **NestJS** backend: `POST /rag/upload-pdf` accepts the file as multipart upload and runs extraction → chunking → embedding server-side, with each stage refactored into its own helper under `Common/Utils`.
+- ✅ **Sep 3** — List a user's uploaded documents, and rendered them as a selectable list.
