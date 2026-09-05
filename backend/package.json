@@ -14,8 +14,7 @@
     "start:dev": "nest start --watch",
     "start:debug": "nest start --debug --watch",
     "start:prod": "node dist/main",
-    "lint": "oxlint src/",
-    "postinstall": "prisma skills sync || exit 0"
+    "lint": "oxlint src/"
   },
   "dependencies": {
     "@google/genai": "^2.20.0",

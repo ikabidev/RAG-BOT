@@ -8,6 +8,7 @@ function AI() {
   const formData = new FormData();
   const [documents, setDocuments] = useState([]);
   const [selectedDocument, setSelectedDocument] = useState(null);
+  const [output, setOutput] = useState('');
 
   const logout = () => {
     sessionStorage.removeItem('is_logged_in');
@@ -36,8 +37,21 @@ function AI() {
       body: formData
     });
 
-    window.alert("File Uploaded Successfully");
     getDocuments();
+  }
+
+  const handleSubmit = async () => {
+    if (!selectedDocument) {
+      setOutput("Please select a document to ask your prompt.");
+      return;
+    }
+    else{
+      const response = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/rag/ask`, {
+          document_id: selectedDocument.id,
+          prompt: prompt
+      });
+      setOutput(response.data.data);
+    }
   }
 
   return (
@@ -61,7 +75,7 @@ function AI() {
                 value={prompt}
                 onChange={(e) => {setPrompt(e.target.value)}}
               />
-              <button className={`nb-btn nb-btn-primary ${selectedDocument ? '' : 'disabled-btn'}`} type="button">Submit</button>
+              <button className={`nb-btn nb-btn-primary ${selectedDocument ? '' : 'disabled-btn'}`} onClick={handleSubmit} type="button">Submit</button>
             </div>
           </div>
 
@@ -81,10 +95,10 @@ function AI() {
         <div className="nb-documents-container">
           {documents.length === 0 ? "Upload a Document to get started." : 
             documents.map((document) => (
-              <div key={document.id} className="nb-document">
+              <div key={document.id} className={selectedDocument?.id === document.id ? "nb-document nb-document-selected" : "nb-document"}>
                 <input type="radio" name="document" onChange={() => setSelectedDocument(document)} className="nb-document-checkbox" />
                 <div className="nb-document-name">
-                  {document.name.length > 20 ? document.name.substring(0, 31) + "..." : document.name }
+                  {document.name.length > 20 ? (document.name.substring(0, 31) + "...") : document.name }
                 </div>
               </div>
             ))
@@ -94,7 +108,7 @@ function AI() {
 
       <section className="nb-output">
         <div className="nb-output-head">Output</div>
-        <div className="nb-empty">{"Upload/Select a Document to get relevant answers."}</div>
+        {output ? <div className="nb-output-content"><Markdown>{output}</Markdown></div> : <div className="nb-empty">{output || "Upload/Select a Document to get relevant answers."}</div>}
       </section>
     </div>
   )

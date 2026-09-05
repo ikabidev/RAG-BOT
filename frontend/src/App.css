@@ -218,6 +218,7 @@
 
 .nb-document-checkbox{
   position: absolute;
+  opacity: 0;
   width: 100%;
   top: 0;
   left: 0;
@@ -310,10 +311,22 @@
 
 /* ---------- Empty state ---------- */
 
-.nb-empty {
+.nb-empty, .nb-output-content {
   padding: 28px 24px;
   font-family: "Helvetica Neue", Arial, sans-serif;
-  font-weight: 700;
+
   color: #6b6b6b;
   text-align: center;
+}
+
+.nb-output-content{
+ color: var(--nb-ink);
+  text-align: left;
+  font-weight: 500;
+}
+
+.nb-document-selected{
+  background: var(--nb-green);
+    box-shadow: 0 0 0 var(--nb-ink);
+  transform: translate(4px, 4px);
 }

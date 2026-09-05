@@ -1,4 +1,4 @@
-import { Query, Controller, Get, Post, UploadedFile, UseInterceptors } from '@nestjs/common';
+import { Query, Controller, Body, Get, Post, UploadedFile, UseInterceptors } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { RagService } from './Rag.service.js';
 
@@ -15,5 +15,10 @@ export class RagController {
   @Get('get-document')
   async getDocument(@Query('user_id') user_id: number) {
     return this.ragService.getDocument(user_id);
+  }
+
+  @Post('ask')
+  async askQuestion(@Body() body: { document_id: any, prompt: string }) {
+    return this.ragService.askQuestion(body.document_id, body.prompt);
   }
 }

@@ -18,3 +18,4 @@ This README serves as a progress tracker, documenting the concepts learned and f
 - ✅ **Aug 31** — Connected the React login/register form to the NestJS `/auth` endpoints with **axios**, and added DTOs for the request bodies.
 - ✅ **Sep 2** — Ported the RAG pipeline into the **NestJS** backend: `POST /rag/upload-pdf` accepts the file as multipart upload and runs extraction → chunking → embedding server-side, with each stage refactored into its own helper under `Common/Utils`.
 - ✅ **Sep 3** — List a user's uploaded documents, and rendered them as a selectable list.
+- ✅ **Sep 5** — Closed the loop end-to-end in the backend: added `POST /rag/ask`, which embeds the prompt with `RETRIEVAL_QUERY` and retrieves the top 3 chunks. Moved similarity ranking out of JavaScript and into **pgvector** (cosine-distance operator).
